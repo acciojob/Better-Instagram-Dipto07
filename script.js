@@ -1,25 +1,21 @@
-document.addEventListener("DOMContentLoaded", function() {
-    var dragged;
+var draggedDiv;
 
-    document.addEventListener("dragstart", function(event) {
-        dragged = event.target;
-        event.target.style.opacity = .5;
-    }, false);
+function drag(event) {
+    // Store the id of the dragged div
+    draggedDiv = event.target;
+}
 
-    document.addEventListener("dragend", function(event) {
-        event.target.style.opacity = "";
-    }, false);
+function allowDrop(event) {
+    // Prevent the default behavior to allow dropping
+    event.preventDefault();
+}
 
-    document.addEventListener("dragover", function(event) {
-        event.preventDefault();
-    }, false);
+function drop(event) {
+    // Prevent the default behavior
+    event.preventDefault();
 
-    document.addEventListener("drop", function(event) {
-        event.preventDefault();
-        if (event.target.className == "drag") {
-            var temp = event.target.style.backgroundImage;
-            event.target.style.backgroundImage = dragged.style.backgroundImage;
-            dragged.style.backgroundImage = temp;
-        }
-    }, false);
-});
+    // Swap the background images of the dragged div and the target div
+    var temp = event.target.style.backgroundImage;
+    event.target.style.backgroundImage = draggedDiv.style.backgroundImage;
+    draggedDiv.style.backgroundImage = temp;
+}
